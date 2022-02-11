@@ -12,51 +12,113 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AssetBalance {
 
-  /**
-   * Asset symbol.
-   */
-  private String asset;
+    /**
+     * Asset symbol.
+     */
+    private String asset;
 
-  /**
-   * Available balance.
-   */
-  private String free;
+    /**
+     * Available balance.
+     */
+    private String free;
 
-  /**
-   * Locked by open orders.
-   */
-  private String locked;
+    /**
+     * Locked by open orders.
+     */
+    private String locked;
 
-  public String getAsset() {
-    return asset;
-  }
+    private String withdrawing;
 
-  public void setAsset(String asset) {
-    this.asset = asset;
-  }
+    private String btcValuation;
 
-  public String getFree() {
-    return free;
-  }
+    private String fiatValuation;
 
-  public void setFree(String free) {
-    this.free = free;
-  }
+    private String assetName;
 
-  public String getLocked() {
-    return locked;
-  }
+    private String logoUrl;
 
-  public void setLocked(String locked) {
-    this.locked = locked;
-  }
+    private String freeze;
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
-        .append("asset", asset)
-        .append("free", free)
-        .append("locked", locked)
-        .toString();
-  }
+    public String getAsset() {
+        return asset;
+    }
+
+    public void setAsset(String asset) {
+        this.asset = asset;
+    }
+
+    public String getFree() {
+        return free;
+    }
+
+    public void setFree(String free) {
+        this.free = free;
+    }
+
+    public String getLocked() {
+        return locked;
+    }
+
+    public void setLocked(String locked) {
+        this.locked = locked;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
+                .append("asset", asset)
+                .append("assetName", assetName)
+                .append("logoUrl", logoUrl)
+                .append("free", free)
+                .append("locked", locked)
+                .append("freeze", freeze)
+                .append("withdrawing", withdrawing)
+                .append("btcValuation", btcValuation)
+                .append("fiatValuation", fiatValuation)
+                .toString();
+    }
+
+    public String getWithdrawing() {
+        return withdrawing;
+    }
+
+    public void setWithdrawing(String withdrawing) {
+        this.withdrawing = withdrawing;
+    }
+
+    public String getBtcValuation() {
+        return btcValuation;
+    }
+
+    public void setBtcValuation(String btcValuation) {
+        this.btcValuation = btcValuation;
+    }
+
+    public String getFiatValuation() {
+        return fiatValuation;
+    }
+
+    public void setFiatValuation(String fiatValuation) {
+        this.fiatValuation = fiatValuation;
+    }
+
+    public String getAssetName() {
+        return assetName;
+    }
+
+    public void setAssetName(String assetName) {
+        this.assetName = assetName;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public void setFreeze(String freeze) {
+        this.freeze = freeze;
+    }
 }
