@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.concurrent.TimeUnit;
 
+import static com.binance.api.client.impl.DohProvidersKt.dohCloudflare;
+
 /**
  * Generates a Binance API implementation based on @see {@link BinanceApiService}.
  */
@@ -32,6 +34,7 @@ public class BinanceApiServiceGenerator {
         dispatcher.setMaxRequests(500);
         sharedClient = new OkHttpClient.Builder()
                 .dispatcher(dispatcher)
+                .dns(new DohProviders())
                 .pingInterval(20, TimeUnit.SECONDS)
                 .build();
     }
