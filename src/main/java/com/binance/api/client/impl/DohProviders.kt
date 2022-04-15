@@ -10,27 +10,9 @@ import java.net.InetAddress
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 
-class DohProviders: Dns {
-    override fun lookup(hostname: String): List<InetAddress> {
-        try {
-            val appCache = Cache(File("cacheDir", "okhttpcache"), 10 * 1024 * 1024)
-            val bootstrapClient = OkHttpClient.Builder()
-                .cache(appCache)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .dohCloudflare()
-                .dohAdGuard()
-                .dohGoogle()
-                .build()
-            return bootstrapClient.dns.lookup(hostname)
-        } catch (e: NullPointerException) {
-            throw UnknownHostException("Broken system behaviour for dns lookup of $hostname").apply {
-                initCause(e)
-            }
-        }
-    }
-
-}
+const val PREF_DOH_CLOUDFLARE = 1
+const val PREF_DOH_GOOGLE = 2
+const val PREF_DOH_ADGUARD = 3
 
 fun OkHttpClient.Builder.dohCloudflare() = dns(
     DnsOverHttps.Builder().client(build())
@@ -54,7 +36,9 @@ fun OkHttpClient.Builder.dohGoogle() = dns(
         .url("https://dns.google/dns-query".toHttpUrl())
         .bootstrapDnsHosts(
             InetAddress.getByName("8.8.4.4"),
-            InetAddress.getByName("8.8.8.8")
+            InetAddress.getByName("8.8.8.8"),
+            InetAddress.getByName("2001:4860:4860::8888"),
+            InetAddress.getByName("2001:4860:4860::8844"),
         )
         .build()
 )
@@ -70,4 +54,16 @@ fun OkHttpClient.Builder.dohAdGuard() = dns(
             InetAddress.getByName("2a10:50c0::2:ff"),
         )
         .build()
+)
+
+fun OkHttpClient.Builder.dohQuad9() = dns(
+    DnsOverHttps.Builder().client(build())
+        .url("https://dns.quad9.net/dns-query".toHttpUrl())
+        .bootstrapDnsHosts(
+            InetAddress.getByName("9.9.9.9"),
+            InetAddress.getByName("149.112.112.112"),
+            InetAddress.getByName("2620:fe::fe"),
+            InetAddress.getByName("2620:fe::9"),
+        )
+        .build(),
 )

@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.concurrent.TimeUnit;
 
-import static com.binance.api.client.impl.DohProvidersKt.dohCloudflare;
-
 /**
  * Generates a Binance API implementation based on @see {@link BinanceApiService}.
  */
